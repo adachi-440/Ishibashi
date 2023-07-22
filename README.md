@@ -27,7 +27,9 @@ Increased gas costs.
 
 ## Installation
 
-Describe the installation steps for your project here.
+```
+yarn install
+```
 
 ## Usage
 

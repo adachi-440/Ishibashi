@@ -2,12 +2,13 @@ import { ethers } from "hardhat";
 import { HYPERLANE_MAILBOX } from "../constants/deployments";
 
 async function main() {
-  const Router = await ethers.getContractFactory("Router");
-  const router = await Router.deploy(HYPERLANE_MAILBOX);
 
-  await router.deployed();
+  const HyperlaneAdapter = await ethers.getContractFactory("HyperlaneAdapter");
+  const hyperlaneAdapter = await HyperlaneAdapter.deploy(HYPERLANE_MAILBOX);
 
-  console.log(`Router deployed to ${router.address}`);
+  await hyperlaneAdapter.deployed();
+
+  console.log(`HyperlaneAdapter deployed to ${hyperlaneAdapter.address}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
