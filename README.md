@@ -1,13 +1,38 @@
-# Sample Hardhat Project
+# Ishibashi ⽯橋
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+## Overview
 
-Try running some of the following tasks:
+This project aims to enable more secure execution of cross-chain messaging. It leverages multiple messaging protocols and allows setting k of n thresholds when sending messages. It utilizes multiple messaging protocols to send messages that meet the specified conditions. Upon receiving messages, it waits for k of n messages to be received before executing the messages.
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
-```
+## Architecture
+
+![Architecture](./docs/multi-verification.png)
+
+## Flow
+
+- Secure execution of cross-chain messaging.
+- Utilizes multiple messaging protocols.
+- Set k of n thresholds when sending messages.
+- Utilizes multiple messaging protocols to send messages that meet the specified conditions.
+- Waits for k of n messages to be received before executing the messages.
+
+## Benefits
+
+- Reduces the risk of hacking by using multiple messaging protocols with independent verifications.
+- Improves the developer experience with a common interface.
+
+## Drawbacks
+
+Increased gas costs.
+
+## Installation
+
+Describe the installation steps for your project here.
+
+## Usage
+
+Provide examples and instructions on how to use your project here.
+
+## Contract Address
+
+## Trasactions
