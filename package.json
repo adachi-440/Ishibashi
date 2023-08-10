@@ -8,7 +8,9 @@
   "scripts": {
     "build": "hardhat compile",
     "test": "hardhat test",
-    "deploy-goerli": "hardhat run --network goerli scripts/deploy.ts"
+    "deploy:router": "hardhat run TASK_DEPLOY_ROUTER",
+    "deploy:hyperlane-adapter": "hardhat run TASK_DEPLOY_HYPERLANE_ADAPTER",
+    "send-message": "hardhat run TASK_SEND_MESSAGE"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.4.7",
