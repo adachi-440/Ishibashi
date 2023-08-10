@@ -57,11 +57,12 @@ contract Router is IRouter {
         bytes32 messageHash = keccak256(abi.encodePacked(_message, _nonce));
         bytes memory message = abi.encodePacked(messageHash, _message);
         for (uint256 i = 0; i < _adapters.length; i++) {
-            IAdapter(_adapters[i]).sendMessage(
-                _dstChainId,
-                _recipient,
-                _message
+            IAdapter adapter = IAdapter(_adapters[i]);
+            require(
+                adapter.isSupportedNetwork(_dstChainId),
+                "Router: unsupported network"
             );
+            adapter.sendMessage(_dstChainId, _recipient, message);
         }
         _nonce += 1;
         emit SendMessage(messageHash, _dstChainId, _recipient, _message);

@@ -6,12 +6,15 @@ import "./interfaces/IMessageRecipient.sol";
 import "./interfaces/IAdapter.sol";
 import "./interfaces/IRouter.sol";
 
+import "@openzeppelin/contracts/access/Ownable.sol";
+
 // Uncomment this line to use console.log
 import "hardhat/console.sol";
 
-contract HyperlaneAdapter is IMessageRecipient, IAdapter {
+contract HyperlaneAdapter is IMessageRecipient, IAdapter, Ownable {
     address public mailBox;
     address public router;
+    mapping(uint32 => bool) public supportedNetworks;
 
     constructor(address _mailBox) {
         mailBox = _mailBox;
@@ -47,6 +50,20 @@ contract HyperlaneAdapter is IMessageRecipient, IAdapter {
 
     function setRouter(address _router) external {
         router = _router;
+    }
+
+    function setSupportedNetwork(
+        uint32[] calldata _dstChainIds
+    ) external onlyOwner {
+        for (uint256 i = 0; i < _dstChainIds.length; i++) {
+            supportedNetworks[_dstChainIds[i]] = true;
+        }
+    }
+
+    function isSupportedNetwork(
+        uint32 _dstChainId
+    ) external view returns (bool) {
+        return supportedNetworks[_dstChainId];
     }
 
     function convertChainIdToHyperlaneDomain(
