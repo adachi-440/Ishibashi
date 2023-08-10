@@ -9,15 +9,19 @@ import "./interfaces/IReceiver.sol";
 import "hardhat/console.sol";
 
 contract Router is IRouter {
-    uint256 private _threshold;
     uint256 private _nonce;
-    mapping(uint32 => mapping(bytes32 => uint256)) public confirmations;
+    mapping(uint32 => mapping(bytes32 => Comfirmation)) public confirmations;
+    struct Comfirmation {
+        uint256 confirmations;
+        uint256 threshold;
+    }
 
     event SendMessage(
         bytes32 messageHash,
         uint32 dstChainId,
         address recipient,
-        bytes message
+        bytes message,
+        uint256 threshold
     );
 
     event MessageConfirmed(
@@ -43,8 +47,7 @@ contract Router is IRouter {
         bytes reason
     );
 
-    constructor(uint256 threshold) {
-        _threshold = threshold;
+    constructor() {
         _nonce = 0;
     }
 
@@ -52,7 +55,8 @@ contract Router is IRouter {
         uint32 _dstChainId,
         address _recipient,
         bytes calldata _message,
-        address[] calldata _adapters
+        address[] calldata _adapters,
+        uint256 _threshold
     ) external {
         bytes32 messageHash = keccak256(abi.encodePacked(_message, _nonce));
         bytes memory message = abi.encodePacked(messageHash, _message);
@@ -60,8 +64,15 @@ contract Router is IRouter {
             IAdapter adapter = IAdapter(_adapters[i]);
             adapter.sendMessage(_dstChainId, _recipient, message);
         }
+        confirmations[_dstChainId][messageHash] = Comfirmation(0, _threshold);
         _nonce += 1;
-        emit SendMessage(messageHash, _dstChainId, _recipient, _message);
+        emit SendMessage(
+            messageHash,
+            _dstChainId,
+            _recipient,
+            _message,
+            _threshold
+        );
     }
 
     function confirmMessage(
@@ -73,18 +84,21 @@ contract Router is IRouter {
             _message,
             (bytes32, bytes)
         );
-        confirmations[_originChainId][messageHash] += 1;
-        if (confirmations[_originChainId][messageHash] < _threshold) {
+        Comfirmation storage confirmation = confirmations[_originChainId][
+            messageHash
+        ];
+        confirmation.confirmations += 1;
+        if (confirmation.confirmations < confirmation.threshold) {
             emit MessageConfirmed(
                 messageHash,
                 _originChainId,
                 _originSender,
                 messageBody,
-                confirmations[_originChainId][messageHash]
+                confirmation.confirmations
             );
         }
 
-        if (confirmations[_originChainId][messageHash] == _threshold) {
+        if (confirmation.confirmations == confirmation.threshold) {
             try
                 IReceiver(_originSender).receiveMessage(
                     messageHash,
@@ -98,7 +112,7 @@ contract Router is IRouter {
                     _originChainId,
                     _originSender,
                     messageBody,
-                    confirmations[_originChainId][messageHash]
+                    confirmation.confirmations
                 );
             } catch Error(string memory reason) {
                 emit MessageFailed(
