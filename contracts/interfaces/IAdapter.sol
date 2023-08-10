@@ -7,8 +7,4 @@ interface IAdapter {
         address _recipient,
         bytes calldata _message
     ) external;
-
-    function isSupportedNetwork(
-        uint32 _dstchainId
-    ) external view returns (bool);
 }

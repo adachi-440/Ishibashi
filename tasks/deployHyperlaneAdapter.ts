@@ -13,9 +13,9 @@ task("TASK_DEPLOY_HYPERLANE_ADAPTER", "Deploy hyperlane adapter contract")
       const spinner = ora(
         "Deploying HyperlaneAdapter contract. This may take a few minutes.."
       ).start();
-      const adapter = await HyperlaneAdapter.deploy(HYPERLANE_MAILBOX);
+      const adapter = await HyperlaneAdapter.deploy();
       await adapter.deployed();
-      const tx = await adapter.setRouter(router);
+      let tx = await adapter.init(router, HYPERLANE_MAILBOX.dstChainIds, HYPERLANE_MAILBOX.mailboxes);
       await tx.wait();
       spinner.succeed(`HyperlaneAdapter deployed to: ${adapter.address}`);
       if (taskArgs.verify) {

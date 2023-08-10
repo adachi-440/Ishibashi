@@ -58,10 +58,6 @@ contract Router is IRouter {
         bytes memory message = abi.encodePacked(messageHash, _message);
         for (uint256 i = 0; i < _adapters.length; i++) {
             IAdapter adapter = IAdapter(_adapters[i]);
-            require(
-                adapter.isSupportedNetwork(_dstChainId),
-                "Router: unsupported network"
-            );
             adapter.sendMessage(_dstChainId, _recipient, message);
         }
         _nonce += 1;

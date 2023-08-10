@@ -12,19 +12,16 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "hardhat/console.sol";
 
 contract HyperlaneAdapter is IMessageRecipient, IAdapter, Ownable {
-    address public mailBox;
     address public router;
-    mapping(uint32 => bool) public supportedNetworks;
-
-    constructor(address _mailBox) {
-        mailBox = _mailBox;
-    }
+    mapping(uint32 => address) public supportedNetworks;
 
     function sendMessage(
         uint32 _dstChainId,
         address _recipient,
         bytes calldata _message
     ) external {
+        address mailBox = supportedNetworks[_dstChainId];
+        require(mailBox != address(0), "HyperlaneAdapter: unsupported network");
         bytes32 recipient = addressToBytes32(_recipient);
         uint32 destinationDomain = convertChainIdToHyperlaneDomain(_dstChainId);
         IMailbox(mailBox).dispatch(destinationDomain, recipient, _message);
@@ -48,21 +45,41 @@ contract HyperlaneAdapter is IMessageRecipient, IAdapter, Ownable {
         return address(uint160(uint256(_buf)));
     }
 
-    function setRouter(address _router) external {
-        router = _router;
+    function init(
+        address _router,
+        uint32[] calldata _dstChainIds,
+        address[] calldata _mailBoxes
+    ) external onlyOwner {
+        _setRouter(_router);
+        _setSupportedNetwork(_dstChainIds, _mailBoxes);
+    }
+
+    function setRouter(address _router) external onlyOwner {
+        _setRouter(_router);
     }
 
     function setSupportedNetwork(
-        uint32[] calldata _dstChainIds
+        uint32[] calldata _dstChainIds,
+        address[] calldata _mailBoxes
     ) external onlyOwner {
+        _setSupportedNetwork(_dstChainIds, _mailBoxes);
+    }
+
+    function _setRouter(address _router) private {
+        router = _router;
+    }
+
+    function _setSupportedNetwork(
+        uint32[] calldata _dstChainIds,
+        address[] calldata _mailBoxes
+    ) private {
         for (uint256 i = 0; i < _dstChainIds.length; i++) {
-            supportedNetworks[_dstChainIds[i]] = true;
+            uint32 domain = convertChainIdToHyperlaneDomain(_dstChainIds[i]);
+            supportedNetworks[domain] = _mailBoxes[i];
         }
     }
 
-    function isSupportedNetwork(
-        uint32 _dstChainId
-    ) external view returns (bool) {
+    function targetMailBox(uint32 _dstChainId) external view returns (address) {
         return supportedNetworks[_dstChainId];
     }
 
