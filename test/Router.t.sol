@@ -3,10 +3,10 @@ pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
-import "../src/Router.sol";
-import "../src/mock/MockAdapter.sol";
-import "../src/mock/MockReceiver.sol";
-import "../src/mock/MockBadReceiver.sol";
+import "../contracts/Router.sol";
+import "../contracts/mock/MockAdapter.sol";
+import "../contracts/mock/MockReceiver.sol";
+import "../contracts/mock/MockBadReceiver.sol";
 
 contract RouterTest is Test {
     Router public router;

@@ -1,0 +1,675 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/adachi_tomoki/Ishibashi/contracts/AxelarAdapter.sol": {
+      "lastModificationDate": 1692260843075,
+      "contentHash": "3765b0dd4f33b0b7f9f564cf2a33e6d2",
+      "sourceName": "contracts/AxelarAdapter.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "remappings": [
+            "@openzeppelin/=@openzeppelin/",
+            "contracts/=contracts/",
+            "ds-test/=lib/forge-std/lib/ds-test/src/",
+            "eth-gas-reporter/=eth-gas-reporter/",
+            "forge-std/=lib/forge-std/src/",
+            "hardhat/=hardhat/"
+          ]
+        }
+      },
+      "imports": [
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "AxelarAdapter"
+      ]
+    },
+    "/Users/adachi_tomoki/Ishibashi/node_modules/hardhat/console.sol": {
+      "lastModificationDate": 1691679345294,
+      "contentHash": "896f68942c3a20e9ae3c3c5bfd3add54",
+      "sourceName": "hardhat/console.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "remappings": [
+            "@openzeppelin/=@openzeppelin/",
+            "contracts/=contracts/",
+            "ds-test/=lib/forge-std/lib/ds-test/src/",
+            "eth-gas-reporter/=eth-gas-reporter/",
+            "forge-std/=lib/forge-std/src/",
+            "hardhat/=hardhat/"
+          ]
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.0"
+      ],
+      "artifacts": [
+        "console"
+      ]
+    },
+    "/Users/adachi_tomoki/Ishibashi/contracts/CCIPAdapter.sol": {
+      "lastModificationDate": 1692260843129,
+      "contentHash": "6b9c27b4d519318935655f0d25f92f08",
+      "sourceName": "contracts/CCIPAdapter.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "remappings": [
+            "@openzeppelin/=@openzeppelin/",
+            "contracts/=contracts/",
+            "ds-test/=lib/forge-std/lib/ds-test/src/",
+            "eth-gas-reporter/=eth-gas-reporter/",
+            "forge-std/=lib/forge-std/src/",
+            "hardhat/=hardhat/"
+          ]
+        }
+      },
+      "imports": [
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "CCIPAdapter"
+      ]
+    },
+    "/Users/adachi_tomoki/Ishibashi/contracts/HyperlaneAdapter.sol": {
+      "lastModificationDate": 1692260843169,
+      "contentHash": "b61ea960cf1888cc16288c8bb08cf713",
+      "sourceName": "contracts/HyperlaneAdapter.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "remappings": [
+            "@openzeppelin/=@openzeppelin/",
+            "contracts/=contracts/",
+            "ds-test/=lib/forge-std/lib/ds-test/src/",
+            "eth-gas-reporter/=eth-gas-reporter/",
+            "forge-std/=lib/forge-std/src/",
+            "hardhat/=hardhat/"
+          ]
+        }
+      },
+      "imports": [
+        "./interfaces/IMailbox.sol",
+        "./interfaces/IMessageRecipient.sol",
+        "./interfaces/IAdapter.sol",
+        "./interfaces/IRouter.sol",
+        "@openzeppelin/contracts/access/Ownable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "HyperlaneAdapter"
+      ]
+    },
+    "/Users/adachi_tomoki/Ishibashi/contracts/interfaces/IAdapter.sol": {
+      "lastModificationDate": 1691681918870,
+      "contentHash": "57c2c158705a6ed904cebd4a0e7521d7",
+      "sourceName": "contracts/interfaces/IAdapter.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "remappings": [
+            "@openzeppelin/=@openzeppelin/",
+            "contracts/=contracts/",
+            "ds-test/=lib/forge-std/lib/ds-test/src/",
+            "eth-gas-reporter/=eth-gas-reporter/",
+            "forge-std/=lib/forge-std/src/",
+            "hardhat/=hardhat/"
+          ]
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "IAdapter"
+      ]
+    },
+    "/Users/adachi_tomoki/Ishibashi/contracts/interfaces/IRouter.sol": {
+      "lastModificationDate": 1692256445637,
+      "contentHash": "290d22c9b64e3f2c3a19365bdb108e5c",
+      "sourceName": "contracts/interfaces/IRouter.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "remappings": [
+            "@openzeppelin/=@openzeppelin/",
+            "contracts/=contracts/",
+            "ds-test/=lib/forge-std/lib/ds-test/src/",
+            "eth-gas-reporter/=eth-gas-reporter/",
+            "forge-std/=lib/forge-std/src/",
+            "hardhat/=hardhat/"
+          ]
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "IRouter"
+      ]
+    },
+    "/Users/adachi_tomoki/Ishibashi/contracts/interfaces/IMailbox.sol": {
+      "lastModificationDate": 1691679255523,
+      "contentHash": "4597d303d5e8820183d8edb6d7178f02",
+      "sourceName": "contracts/interfaces/IMailbox.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "remappings": [
+            "@openzeppelin/=@openzeppelin/",
+            "contracts/=contracts/",
+            "ds-test/=lib/forge-std/lib/ds-test/src/",
+            "eth-gas-reporter/=eth-gas-reporter/",
+            "forge-std/=lib/forge-std/src/",
+            "hardhat/=hardhat/"
+          ]
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "IMailbox"
+      ]
+    },
+    "/Users/adachi_tomoki/Ishibashi/contracts/interfaces/IMessageRecipient.sol": {
+      "lastModificationDate": 1691679255523,
+      "contentHash": "12d7f2f9e581e44ae43d0945db9c2883",
+      "sourceName": "contracts/interfaces/IMessageRecipient.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "remappings": [
+            "@openzeppelin/=@openzeppelin/",
+            "contracts/=contracts/",
+            "ds-test/=lib/forge-std/lib/ds-test/src/",
+            "eth-gas-reporter/=eth-gas-reporter/",
+            "forge-std/=lib/forge-std/src/",
+            "hardhat/=hardhat/"
+          ]
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "IMessageRecipient"
+      ]
+    },
+    "/Users/adachi_tomoki/Ishibashi/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1691679346366,
+      "contentHash": "5a20b2cad87ddb61c7a3a6af21289e28",
+      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "remappings": [
+            "@openzeppelin/=@openzeppelin/",
+            "contracts/=contracts/",
+            "ds-test/=lib/forge-std/lib/ds-test/src/",
+            "eth-gas-reporter/=eth-gas-reporter/",
+            "forge-std/=lib/forge-std/src/",
+            "hardhat/=hardhat/"
+          ]
+        }
+      },
+      "imports": [
+        "../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Ownable"
+      ]
+    },
+    "/Users/adachi_tomoki/Ishibashi/node_modules/@openzeppelin/contracts/utils/Context.sol": {
+      "lastModificationDate": 1691679346382,
+      "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
+      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "remappings": [
+            "@openzeppelin/=@openzeppelin/",
+            "contracts/=contracts/",
+            "ds-test/=lib/forge-std/lib/ds-test/src/",
+            "eth-gas-reporter/=eth-gas-reporter/",
+            "forge-std/=lib/forge-std/src/",
+            "hardhat/=hardhat/"
+          ]
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Context"
+      ]
+    },
+    "/Users/adachi_tomoki/Ishibashi/contracts/mock/MockAdapter.sol": {
+      "lastModificationDate": 1692254439836,
+      "contentHash": "5b57b7581148d2de09332bbbe0026b0c",
+      "sourceName": "contracts/mock/MockAdapter.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "remappings": [
+            "@openzeppelin/=@openzeppelin/",
+            "contracts/=contracts/",
+            "ds-test/=lib/forge-std/lib/ds-test/src/",
+            "eth-gas-reporter/=eth-gas-reporter/",
+            "forge-std/=lib/forge-std/src/",
+            "hardhat/=hardhat/"
+          ]
+        }
+      },
+      "imports": [
+        "../interfaces/IAdapter.sol",
+        "../interfaces/IRouter.sol",
+        "@openzeppelin/contracts/access/Ownable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "MockAdapter"
+      ]
+    },
+    "/Users/adachi_tomoki/Ishibashi/contracts/Router.sol": {
+      "lastModificationDate": 1692260843230,
+      "contentHash": "d2cb87cc695f5529f8cfc1ff4a941158",
+      "sourceName": "contracts/Router.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "remappings": [
+            "@openzeppelin/=@openzeppelin/",
+            "contracts/=contracts/",
+            "ds-test/=lib/forge-std/lib/ds-test/src/",
+            "eth-gas-reporter/=eth-gas-reporter/",
+            "forge-std/=lib/forge-std/src/",
+            "hardhat/=hardhat/"
+          ]
+        }
+      },
+      "imports": [
+        "./interfaces/IRouter.sol",
+        "./interfaces/IAdapter.sol",
+        "./interfaces/IReceiver.sol",
+        "@openzeppelin/contracts/access/Ownable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "Router"
+      ]
+    },
+    "/Users/adachi_tomoki/Ishibashi/contracts/interfaces/IReceiver.sol": {
+      "lastModificationDate": 1691679255523,
+      "contentHash": "e2e5be5d5ba5bcf7005e32328470ab6b",
+      "sourceName": "contracts/interfaces/IReceiver.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "remappings": [
+            "@openzeppelin/=@openzeppelin/",
+            "contracts/=contracts/",
+            "ds-test/=lib/forge-std/lib/ds-test/src/",
+            "eth-gas-reporter/=eth-gas-reporter/",
+            "forge-std/=lib/forge-std/src/",
+            "hardhat/=hardhat/"
+          ]
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "IReceiver"
+      ]
+    },
+    "/Users/adachi_tomoki/Ishibashi/contracts/mock/MockReceiver.sol": {
+      "lastModificationDate": 1692255389873,
+      "contentHash": "8764813715b3fdb3b8b127fa7bede22e",
+      "sourceName": "contracts/mock/MockReceiver.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "remappings": [
+            "@openzeppelin/=@openzeppelin/",
+            "contracts/=contracts/",
+            "ds-test/=lib/forge-std/lib/ds-test/src/",
+            "eth-gas-reporter/=eth-gas-reporter/",
+            "forge-std/=lib/forge-std/src/",
+            "hardhat/=hardhat/"
+          ]
+        }
+      },
+      "imports": [
+        "../interfaces/IReceiver.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "MockReceiver"
+      ]
+    },
+    "/Users/adachi_tomoki/Ishibashi/contracts/mock/MockBadReceiver.sol": {
+      "lastModificationDate": 1692255460584,
+      "contentHash": "a6da3f3e4d3dcd85db532d036f5a6c51",
+      "sourceName": "contracts/mock/MockBadReceiver.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "remappings": [
+            "@openzeppelin/=@openzeppelin/",
+            "contracts/=contracts/",
+            "ds-test/=lib/forge-std/lib/ds-test/src/",
+            "eth-gas-reporter/=eth-gas-reporter/",
+            "forge-std/=lib/forge-std/src/",
+            "hardhat/=hardhat/"
+          ]
+        }
+      },
+      "imports": [
+        "../interfaces/IReceiver.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "MockBadReceiver"
+      ]
+    }
+  }
+}

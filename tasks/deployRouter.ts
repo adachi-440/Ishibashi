@@ -11,7 +11,7 @@ task("TASK_DEPLOY_ROUTER", "Deploy router contract")
       const spinner = ora(
         "Deploying router contract. This may take a few minutes.."
       ).start();
-      const router = await Router.deploy(1);
+      const router = await Router.deploy();
       await router.deployed();
       spinner.succeed(`Router deployed to: ${router.address}`);
       if (taskArgs.verify) {
