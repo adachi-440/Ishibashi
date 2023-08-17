@@ -108,7 +108,10 @@ contract RouterTest is Test {
     function test_ReceiveMessage() public {
         // send message
         bytes32 messageHash = keccak256(abi.encodePacked(message, nonce));
-        bytes memory body = abi.encode(messageHash, message);
+        bytes memory body = abi.encode(
+            abi.encode(messageHash, message),
+            address(receiver)
+        );
         uint32 dstChainId = 1;
         router.sendMessage(
             dstChainId,
@@ -136,7 +139,10 @@ contract RouterTest is Test {
         router.setThreshold(2);
         // send message
         bytes32 messageHash = keccak256(abi.encodePacked(message, nonce));
-        bytes memory body = abi.encode(messageHash, message);
+        bytes memory body = abi.encode(
+            abi.encode(messageHash, message),
+            address(receiver)
+        );
         uint32 dstChainId = 1;
         router.sendMessage(
             dstChainId,
@@ -167,7 +173,10 @@ contract RouterTest is Test {
         router.setThreshold(1);
         // send message
         bytes32 messageHash = keccak256(abi.encodePacked(message, nonce));
-        bytes memory body = abi.encode(messageHash, message);
+        bytes memory body = abi.encode(
+            abi.encode(messageHash, message),
+            address(badReceiver)
+        );
         uint32 dstChainId = 1;
         router.sendMessage(
             dstChainId,

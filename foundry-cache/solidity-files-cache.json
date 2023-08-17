@@ -97,8 +97,8 @@
       }
     },
     "contracts/HyperlaneAdapter.sol": {
-      "lastModificationDate": 1692274760866,
-      "contentHash": "eecbdf3c9cad9333bdad424e40c76f8a",
+      "lastModificationDate": 1692281139416,
+      "contentHash": "5e7dcc937060d7655cf63af79d3d79a3",
       "sourceName": "contracts/HyperlaneAdapter.sol",
       "solcConfig": {
         "settings": {
@@ -145,8 +145,8 @@
       }
     },
     "contracts/Router.sol": {
-      "lastModificationDate": 1692275284041,
-      "contentHash": "08af829a27494ecffaf140be37a919f3",
+      "lastModificationDate": 1692276310491,
+      "contentHash": "c73e22c6282310a9f600e79d444bbe28",
       "sourceName": "contracts/Router.sol",
       "solcConfig": {
         "settings": {
@@ -391,8 +391,8 @@
       }
     },
     "contracts/interfaces/IRouter.sol": {
-      "lastModificationDate": 1692275287904,
-      "contentHash": "91d97b54994e7c38069aba37d348b391",
+      "lastModificationDate": 1692276290383,
+      "contentHash": "eef74f388e2a4acff827154772ab4362",
       "sourceName": "contracts/interfaces/IRouter.sol",
       "solcConfig": {
         "settings": {
@@ -431,8 +431,8 @@
       }
     },
     "contracts/mock/MockAdapter.sol": {
-      "lastModificationDate": 1692275315975,
-      "contentHash": "ebad824820ec5756f2813e8292d5bf1c",
+      "lastModificationDate": 1692276798354,
+      "contentHash": "56e60956884b2d00ff1d8ff843131da8",
       "sourceName": "contracts/mock/MockAdapter.sol",
       "solcConfig": {
         "settings": {
@@ -1455,8 +1455,8 @@
       }
     },
     "test/Router.t.sol": {
-      "lastModificationDate": 1692275381725,
-      "contentHash": "b4cfebd12bd1ed317b589c502e6bdbfb",
+      "lastModificationDate": 1692276885638,
+      "contentHash": "f85a32d3347dcf66504ec08bc9557fbb",
       "sourceName": "test/Router.t.sol",
       "solcConfig": {
         "settings": {

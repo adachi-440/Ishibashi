@@ -82,6 +82,7 @@ contract Router is IRouter, Ownable {
     function confirmMessage(
         uint32 _originChainId,
         address _originSender,
+        address _recipient,
         bytes calldata _message
     ) external {
         (bytes32 messageHash, bytes memory messageBody) = abi.decode(
@@ -102,7 +103,7 @@ contract Router is IRouter, Ownable {
         }
         if (confirmation == _threshold) {
             try
-                IReceiver(_originSender).receiveMessage(
+                IReceiver(_recipient).receiveMessage(
                     messageHash,
                     _originChainId,
                     _originSender,

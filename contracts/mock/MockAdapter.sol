@@ -29,9 +29,10 @@ contract MockAdapter is IAdapter, Ownable {
         address _recipient,
         bytes calldata _message
     ) external payable {
-        address mailBox = supportedNetworks[_dstChainId];
-        if (mailBox == address(0)) revert UnsupportedNetwork();
-        _sendMessage(_dstChainId, _recipient, _message);
+        address dstAdapter = supportedNetworks[_dstChainId];
+        if (dstAdapter == address(0)) revert UnsupportedNetwork();
+        bytes memory messageWithRecipient = abi.encode(_message, _recipient);
+        _sendMessage(_dstChainId, dstAdapter, messageWithRecipient);
     }
 
     function receiveMessage(
@@ -39,7 +40,11 @@ contract MockAdapter is IAdapter, Ownable {
         address _sender,
         bytes calldata _body
     ) external {
-        IRouter(router).confirmMessage(_origin, _sender, _body);
+        (bytes memory message, address recipient) = abi.decode(
+            _body,
+            (bytes, address)
+        );
+        IRouter(router).confirmMessage(_origin, _sender, recipient, message);
     }
 
     function addressToBytes32(address _addr) internal pure returns (bytes32) {
@@ -98,7 +103,7 @@ contract MockAdapter is IAdapter, Ownable {
     function _sendMessage(
         uint32 _dstChainId,
         address _recipient,
-        bytes calldata _message
+        bytes memory _message
     ) internal {
         bytes32 messageHash = keccak256(
             abi.encodePacked(_dstChainId, _recipient, _message, nonce)

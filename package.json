@@ -11,7 +11,8 @@
     "deploy:router": "hardhat TASK_DEPLOY_ROUTER",
     "deploy:hyperlane-adapter": "hardhat TASK_DEPLOY_HYPERLANE_ADAPTER",
     "send-message": "hardhat TASK_SEND_MESSAGE",
-    "deploy:receiver": "hardhat TASK_DEPLOY_RECEIVER"
+    "deploy:receiver": "hardhat TASK_DEPLOY_RECEIVER",
+    "set-hyperlane-adapter": "hardhat TASK_SET_HYPERLANE_ADAPTER"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.4.7",

@@ -20,10 +20,15 @@ task("TASK_SEND_MESSAGE", "Send message using router")
 
       try {
         const fees = await router.estimateGasFees(chainid, 1000000, messageBytes, adapters);
-        console.log("Estimated gas fees:", fees);
+        let totalFee = hre.ethers.BigNumber.from(0)
+        for (let i = 0; i < fees.length; i++) {
+          totalFee = totalFee.add(fees[i])
+        }
+        console.log("Estimated gas fees:", totalFee);
         console.log("Sending message. This may take a few minutes..");
-        console.log(messageBytes);
-        const tx = await router.sendMessage(chainid, recipient, messageBytes, adapters, fees, { gasLimit: 30000000, value: 0 });
+
+        // TODO the error occuered on destination chain
+        const tx = await router.sendMessage(chainid, recipient, messageBytes, adapters, fees, { gasLimit: 30000000, value: totalFee });
         await tx.wait();
         console.log(`✅ [${hre.network.name}] Message sent! tx: ${tx.hash}`);
       } catch (e: any) {

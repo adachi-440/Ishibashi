@@ -11,14 +11,16 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract HyperlaneAdapter is IMessageRecipient, IAdapter, Ownable {
     address public router;
+    IMailbox private mailBox;
     mapping(uint32 => address) public supportedNetworks;
 
     IInterchainGasPaymaster igp;
 
     error UnsupportedNetwork();
 
-    constructor(address _igp) {
+    constructor(address _mailBox, address _igp) {
         igp = IInterchainGasPaymaster(_igp);
+        mailBox = IMailbox(_mailBox);
     }
 
     function sendMessage(
@@ -26,14 +28,15 @@ contract HyperlaneAdapter is IMessageRecipient, IAdapter, Ownable {
         address _recipient,
         bytes calldata _message
     ) external payable {
-        address mailBox = supportedNetworks[_dstChainId];
-        if (mailBox == address(0)) revert UnsupportedNetwork();
-        bytes32 recipient = addressToBytes32(_recipient);
+        address dstAdapter = supportedNetworks[_dstChainId];
+        if (dstAdapter == address(0)) revert UnsupportedNetwork();
+        bytes32 recipient = addressToBytes32(dstAdapter);
+        bytes memory messageWithRecipient = abi.encode(_message, _recipient);
         uint32 destinationDomain = convertChainIdToHyperlaneDomain(_dstChainId);
-        bytes32 messageId = IMailbox(mailBox).dispatch(
+        bytes32 messageId = mailBox.dispatch(
             destinationDomain,
             recipient,
-            _message
+            messageWithRecipient
         );
 
         igp.payForGas{value: msg.value}(
@@ -50,8 +53,12 @@ contract HyperlaneAdapter is IMessageRecipient, IAdapter, Ownable {
         bytes calldata _body
     ) external {
         uint32 origin = convertHyperlaneDomainToChainId(_origin);
+        (bytes memory message, address recipient) = abi.decode(
+            _body,
+            (bytes, address)
+        );
         address sender = bytes32ToAddress(_sender);
-        IRouter(router).confirmMessage(origin, sender, _body);
+        IRouter(router).confirmMessage(origin, sender, recipient, message);
     }
 
     function addressToBytes32(address _addr) internal pure returns (bytes32) {
@@ -77,9 +84,9 @@ contract HyperlaneAdapter is IMessageRecipient, IAdapter, Ownable {
 
     function setSupportedNetwork(
         uint32[] calldata _dstChainIds,
-        address[] calldata _mailBoxes
+        address[] calldata _adapters
     ) external onlyOwner {
-        _setSupportedNetwork(_dstChainIds, _mailBoxes);
+        _setSupportedNetwork(_dstChainIds, _adapters);
     }
 
     function _setRouter(address _router) private {
@@ -88,11 +95,11 @@ contract HyperlaneAdapter is IMessageRecipient, IAdapter, Ownable {
 
     function _setSupportedNetwork(
         uint32[] calldata _dstChainIds,
-        address[] calldata _mailBoxes
+        address[] calldata _adapters
     ) private {
         for (uint256 i = 0; i < _dstChainIds.length; i++) {
             uint32 domain = convertChainIdToHyperlaneDomain(_dstChainIds[i]);
-            supportedNetworks[domain] = _mailBoxes[i];
+            supportedNetworks[domain] = _adapters[i];
         }
     }
 

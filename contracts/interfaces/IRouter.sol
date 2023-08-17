@@ -13,6 +13,7 @@ interface IRouter {
     function confirmMessage(
         uint32 _originChainId,
         address _originSender,
+        address _recipient,
         bytes calldata _message
     ) external;
 

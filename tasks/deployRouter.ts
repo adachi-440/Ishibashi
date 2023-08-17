@@ -1,5 +1,4 @@
 import { task, types } from "hardhat/config";
-import { HYPERLANE_MAILBOX } from "../constants/deployments";
 
 task("TASK_DEPLOY_ROUTER", "Deploy router contract")
   .addParam<boolean>("verify", "Verify router contract", false, types.boolean)
