@@ -5,20 +5,18 @@ import "./interfaces/IRouter.sol";
 import "./interfaces/IAdapter.sol";
 import "./interfaces/IReceiver.sol";
 
-contract Router is IRouter {
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract Router is IRouter, Ownable {
     uint256 private _nonce;
-    mapping(uint32 => mapping(bytes32 => Confirmation)) private confirmations;
-    struct Confirmation {
-        uint256 confirmations;
-        uint256 threshold;
-    }
+    uint256 private _threshold;
+    mapping(uint32 => mapping(bytes32 => uint256)) private confirmations;
 
     event SendMessage(
         bytes32 messageHash,
         uint32 dstChainId,
         address recipient,
-        bytes message,
-        uint256 threshold
+        bytes message
     );
 
     event MessageConfirmed(
@@ -46,14 +44,14 @@ contract Router is IRouter {
 
     constructor() {
         _nonce = 0;
+        _threshold = 1;
     }
 
     function sendMessage(
         uint32 _dstChainId,
         address _recipient,
         bytes calldata _message,
-        address[] calldata _adapters,
-        uint256 _threshold
+        address[] calldata _adapters
     ) external {
         bytes32 messageHash = _generateMessageHash(_message);
         bytes memory message = _getMessage(messageHash, _message);
@@ -61,15 +59,8 @@ contract Router is IRouter {
             IAdapter adapter = IAdapter(_adapters[i]);
             adapter.sendMessage(_dstChainId, _recipient, message);
         }
-        confirmations[_dstChainId][messageHash] = Confirmation(0, _threshold);
         _nonce += 1;
-        emit SendMessage(
-            messageHash,
-            _dstChainId,
-            _recipient,
-            _message,
-            _threshold
-        );
+        emit SendMessage(messageHash, _dstChainId, _recipient, _message);
     }
 
     function confirmMessage(
@@ -81,21 +72,19 @@ contract Router is IRouter {
             _message,
             (bytes32, bytes)
         );
-        Confirmation storage confirmation = confirmations[_originChainId][
-            messageHash
-        ];
-        confirmation.confirmations += 1;
-        if (confirmation.confirmations < confirmation.threshold) {
+        uint256 confirmation = confirmations[_originChainId][messageHash];
+        confirmations[_originChainId][messageHash] = confirmation + 1;
+        confirmation += 1;
+        if (confirmation < _threshold) {
             emit MessageConfirmed(
                 messageHash,
                 _originChainId,
                 _originSender,
                 messageBody,
-                confirmation.confirmations
+                confirmation
             );
         }
-
-        if (confirmation.confirmations == confirmation.threshold) {
+        if (confirmation == _threshold) {
             try
                 IReceiver(_originSender).receiveMessage(
                     messageHash,
@@ -104,37 +93,37 @@ contract Router is IRouter {
                     messageBody
                 )
             {
-                emit MessageConfirmed(
+                emit MessageDelivered(
                     messageHash,
                     _originChainId,
                     _originSender,
-                    messageBody,
-                    confirmation.confirmations
+                    messageBody
                 );
-            } catch Error(string memory reason) {
+            } catch (bytes memory reason) {
                 emit MessageFailed(
                     messageHash,
                     _originChainId,
                     _originSender,
                     messageBody,
-                    bytes(reason)
+                    reason
                 );
             }
-            emit MessageDelivered(
-                messageHash,
-                _originChainId,
-                _originSender,
-                messageBody
-            );
         }
     }
 
     function getConfirmation(
         uint32 _dstChainId,
         bytes32 _messageHash
-    ) external view returns (uint256 confirmation, uint256 threshold) {
-        confirmation = confirmations[_dstChainId][_messageHash].confirmations;
-        threshold = confirmations[_dstChainId][_messageHash].threshold;
+    ) external view returns (uint256) {
+        return confirmations[_dstChainId][_messageHash];
+    }
+
+    function setThreshold(uint256 _newThreshold) external onlyOwner {
+        _threshold = _newThreshold;
+    }
+
+    function getThreshold() external view returns (uint256) {
+        return _threshold;
     }
 
     function _generateMessageHash(
@@ -147,6 +136,6 @@ contract Router is IRouter {
         bytes32 _messageHash,
         bytes calldata _message
     ) internal pure returns (bytes memory) {
-        return abi.encodePacked(_messageHash, _message);
+        return abi.encode(_messageHash, _message);
     }
 }

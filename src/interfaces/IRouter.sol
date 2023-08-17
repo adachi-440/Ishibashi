@@ -6,8 +6,7 @@ interface IRouter {
         uint32 _dstChainId,
         address _recipient,
         bytes calldata _message,
-        address[] calldata _adapters,
-        uint256 _threshold
+        address[] calldata _adapters
     ) external;
 
     function confirmMessage(

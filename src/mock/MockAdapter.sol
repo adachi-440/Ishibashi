@@ -18,6 +18,8 @@ contract MockAdapter is IAdapter, Ownable {
         bytes message
     );
 
+    error UnsupportedNetwork();
+
     constructor() {
         nonce = 0;
     }
@@ -28,7 +30,7 @@ contract MockAdapter is IAdapter, Ownable {
         bytes calldata _message
     ) external {
         address mailBox = supportedNetworks[_dstChainId];
-        require(mailBox != address(0), "MockAdapter: unsupported network");
+        if (mailBox == address(0)) revert UnsupportedNetwork();
         _sendMessage(_dstChainId, _recipient, _message);
     }
 

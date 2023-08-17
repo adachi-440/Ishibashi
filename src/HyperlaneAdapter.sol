@@ -12,13 +12,15 @@ contract HyperlaneAdapter is IMessageRecipient, IAdapter, Ownable {
     address public router;
     mapping(uint32 => address) public supportedNetworks;
 
+    error UnsupportedNetwork();
+
     function sendMessage(
         uint32 _dstChainId,
         address _recipient,
         bytes calldata _message
     ) external {
         address mailBox = supportedNetworks[_dstChainId];
-        require(mailBox != address(0), "HyperlaneAdapter: unsupported network");
+        if (mailBox == address(0)) revert UnsupportedNetwork();
         bytes32 recipient = addressToBytes32(_recipient);
         uint32 destinationDomain = convertChainIdToHyperlaneDomain(_dstChainId);
         IMailbox(mailBox).dispatch(destinationDomain, recipient, _message);
