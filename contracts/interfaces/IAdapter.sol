@@ -6,5 +6,5 @@ interface IAdapter {
         uint32 _dstChainID,
         address _recipient,
         bytes calldata _message
-    ) external;
+    ) external payable;
 }

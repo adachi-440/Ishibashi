@@ -42,6 +42,9 @@ contract Router is IRouter, Ownable {
         bytes reason
     );
 
+    error InvalidRelayerFee();
+    error InsufficientRelayerFee();
+
     constructor() {
         _nonce = 0;
         _threshold = 1;
@@ -51,13 +54,26 @@ contract Router is IRouter, Ownable {
         uint32 _dstChainId,
         address _recipient,
         bytes calldata _message,
-        address[] calldata _adapters
-    ) external {
+        address[] calldata _adapters,
+        uint256[] memory _relayerFees
+    ) external payable {
         bytes32 messageHash = _generateMessageHash(_message);
         bytes memory message = _getMessage(messageHash, _message);
+        if (_adapters.length != _relayerFees.length) {
+            revert InvalidRelayerFee();
+        }
+        uint256 totalFee = msg.value;
         for (uint256 i = 0; i < _adapters.length; i++) {
+            if (_relayerFees[i] > totalFee) {
+                revert InsufficientRelayerFee();
+            }
             IAdapter adapter = IAdapter(_adapters[i]);
-            adapter.sendMessage(_dstChainId, _recipient, message);
+            adapter.sendMessage{value: _relayerFees[i]}(
+                _dstChainId,
+                _recipient,
+                message
+            );
+            totalFee -= _relayerFees[i];
         }
         _nonce += 1;
         emit SendMessage(messageHash, _dstChainId, _recipient, _message);

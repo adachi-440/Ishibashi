@@ -17,6 +17,7 @@ contract RouterTest is Test {
 
     uint32[] dstChainIds = [1, 2];
     address[] supportedNetworks;
+    uint256[] relayerFees = [0, 0];
     uint256 nonce = 0;
     bytes message = bytes("hello world");
 
@@ -71,7 +72,8 @@ contract RouterTest is Test {
             dstChainId,
             address(receiver),
             message,
-            supportedNetworks
+            supportedNetworks,
+            relayerFees
         );
     }
 
@@ -84,7 +86,8 @@ contract RouterTest is Test {
             dstChainId,
             address(receiver),
             message,
-            supportedNetworks
+            supportedNetworks,
+            relayerFees
         );
         nonce++;
     }
@@ -98,7 +101,8 @@ contract RouterTest is Test {
             dstChainId,
             address(receiver),
             message,
-            supportedNetworks
+            supportedNetworks,
+            relayerFees
         );
         nonce++;
 
@@ -125,7 +129,8 @@ contract RouterTest is Test {
             dstChainId,
             address(receiver),
             message,
-            supportedNetworks
+            supportedNetworks,
+            relayerFees
         );
         nonce++;
 
@@ -155,7 +160,8 @@ contract RouterTest is Test {
             dstChainId,
             address(badReceiver),
             message,
-            supportedNetworks
+            supportedNetworks,
+            relayerFees
         );
         nonce++;
 

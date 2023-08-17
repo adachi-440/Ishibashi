@@ -18,7 +18,7 @@ contract HyperlaneAdapter is IMessageRecipient, IAdapter, Ownable {
         uint32 _dstChainId,
         address _recipient,
         bytes calldata _message
-    ) external {
+    ) external payable {
         address mailBox = supportedNetworks[_dstChainId];
         if (mailBox == address(0)) revert UnsupportedNetwork();
         bytes32 recipient = addressToBytes32(_recipient);
