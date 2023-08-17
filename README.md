@@ -1,4 +1,4 @@
-# Ishibashi ⽯橋
+# 🌉 Ishibashi ⽯橋
 
 ## Overview
 
@@ -23,7 +23,8 @@ This project aims to enable more secure execution of cross-chain messaging. It l
 
 ## Drawbacks
 
-Increased gas costs.
+- Increased gas costs
+- Speed is dependent on the slowest messaging protocol
 
 ## Installation
 
@@ -33,8 +34,47 @@ yarn install
 
 ## Usage
 
-Provide examples and instructions on how to use your project here.
+The following functions are executed in user-defined contracts for message requests.
+
+```solidity
+interface IRouter {
+    function sendMessage(
+        uint32 _dstChainId,
+        address _recipient,
+        bytes calldata _message,
+        address[] calldata _adapters
+    ) external;
+}
+
+
+IRouter(router).sendMessage(
+    dstChainId, // Destination chain
+    receiver, // Contract address to receive the message
+    message, // Message in byte format
+    adapters // Adapters for the messaging protocol used
+);
+```
+
+To receive a message, you must define receiveMessage by inheriting IReceiver.
+
+```solidity
+interface IReceiver {
+    function receiveMessage(
+        bytes32 _messageHash,
+        uint32 _originChainId,
+        address _originSender,
+        bytes memory _callData
+    ) external;
+}
+
+function receiveMessage(
+        bytes32 _messageHash,
+        uint32 _originChainId,
+        address _originSender,
+        bytes memory _callData
+    ) external override {
+        // Arbitrary processing
+    }
+```
 
 ## Contract Address
-
-## Trasactions
