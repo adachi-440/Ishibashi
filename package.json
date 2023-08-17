@@ -8,9 +8,10 @@
   "scripts": {
     "build": "hardhat compile",
     "test": "hardhat test",
-    "deploy:router": "hardhat run TASK_DEPLOY_ROUTER",
-    "deploy:hyperlane-adapter": "hardhat run TASK_DEPLOY_HYPERLANE_ADAPTER",
-    "send-message": "hardhat run TASK_SEND_MESSAGE"
+    "deploy:router": "hardhat TASK_DEPLOY_ROUTER",
+    "deploy:hyperlane-adapter": "hardhat TASK_DEPLOY_HYPERLANE_ADAPTER",
+    "send-message": "hardhat TASK_SEND_MESSAGE",
+    "deploy:receiver": "hardhat TASK_DEPLOY_RECEIVER"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.4.7",

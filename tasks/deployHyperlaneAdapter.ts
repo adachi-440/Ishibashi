@@ -3,14 +3,16 @@ import { HYPERLANE_MAILBOX } from "../constants/deployments";
 
 task("TASK_DEPLOY_HYPERLANE_ADAPTER", "Deploy hyperlane adapter contract")
   .addParam<string>("router", "router contract address", "", types.string)
+  .addParam<string>("igp", "igp contract address", "", types.string)
   .addParam<boolean>("verify", "Verify hyperlane adapter contract", false, types.boolean)
   .setAction(
     async (taskArgs, hre): Promise<string> => {
       const HyperlaneAdapter = await hre.ethers.getContractFactory("HyperlaneAdapter");
-      const router = taskArgs.router;
+      const router = taskArgs.router
+      const igp = taskArgs.igp;
 
       console.log("Deploying HyperlaneAdapter contract. This may take a few minutes..")
-      const adapter = await HyperlaneAdapter.deploy();
+      const adapter = await HyperlaneAdapter.deploy(igp, { gasLimit: 30000000 });
       await adapter.deployed();
       let tx = await adapter.init(router, HYPERLANE_MAILBOX.dstChainIds, HYPERLANE_MAILBOX.mailboxes);
       await tx.wait();

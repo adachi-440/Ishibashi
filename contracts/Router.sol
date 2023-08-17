@@ -127,6 +127,20 @@ contract Router is IRouter, Ownable {
         }
     }
 
+    function estimateGasFees(
+        uint32 _dstChainId,
+        uint256 _gasAmount,
+        bytes calldata _message,
+        address[] calldata _adapters
+    ) external view returns (uint256[] memory) {
+        uint256[] memory fees = new uint256[](_adapters.length);
+        for (uint256 i = 0; i < _adapters.length; i++) {
+            IAdapter adapter = IAdapter(_adapters[i]);
+            fees[i] = adapter.estimateGasFee(_dstChainId, _gasAmount, _message);
+        }
+        return fees;
+    }
+
     function getConfirmation(
         uint32 _dstChainId,
         bytes32 _messageHash

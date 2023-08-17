@@ -4,11 +4,11 @@ export const HYPERLANE_MAILBOX = {
 }
 
 export const ROUTER = {
-  "optimism-goerli": "0x0d8c9c8b0b8b4f0b0c0b0b0b0b0b0b0b0b0b0b0b",
-  "arbitrum-goerli": "0x0d8c9c8b0b8b4f0b0c0b0b0b0b0b0b0b0b0b0b0b",
+  "optimism-goerli": "0x752A4cca6ab58aCE44E1Ffe103165f81C2CF521b",
+  "arbitrum-goerli": "0x878E7C4864a57EC4D9d16F617bd96FB9e6140Ea9",
 }
 
 export const HYPERLANE_ADAPTER = {
-  "optimism-goerli": "0x0d8c9c8b0b8b4f0b0c0b0b0b0b0b0b0b0b0b0b0b",
-  "arbitrum-goerli": "0x0d8c9c8b0b8b4f0b0c0b0b0b0b0b0b0b0b0b0b0b",
+  "optimism-goerli": "0x3700350C753C1b993212ba904CaeB4cd056a42A7",
+  "arbitrum-goerli": "0x91fe484492e965cBbCBFF74CecF35663DDbF130b",
 }

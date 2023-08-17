@@ -5,6 +5,7 @@ import "./interfaces/IMailbox.sol";
 import "./interfaces/IMessageRecipient.sol";
 import "./interfaces/IAdapter.sol";
 import "./interfaces/IRouter.sol";
+import "./interfaces/IInterchainGasPaymaster.sol";
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
@@ -12,7 +13,13 @@ contract HyperlaneAdapter is IMessageRecipient, IAdapter, Ownable {
     address public router;
     mapping(uint32 => address) public supportedNetworks;
 
+    IInterchainGasPaymaster igp;
+
     error UnsupportedNetwork();
+
+    constructor(address _igp) {
+        igp = IInterchainGasPaymaster(_igp);
+    }
 
     function sendMessage(
         uint32 _dstChainId,
@@ -23,7 +30,18 @@ contract HyperlaneAdapter is IMessageRecipient, IAdapter, Ownable {
         if (mailBox == address(0)) revert UnsupportedNetwork();
         bytes32 recipient = addressToBytes32(_recipient);
         uint32 destinationDomain = convertChainIdToHyperlaneDomain(_dstChainId);
-        IMailbox(mailBox).dispatch(destinationDomain, recipient, _message);
+        bytes32 messageId = IMailbox(mailBox).dispatch(
+            destinationDomain,
+            recipient,
+            _message
+        );
+
+        igp.payForGas{value: msg.value}(
+            messageId, // The ID of the message that was just dispatched
+            destinationDomain, // The destination domain of the message
+            1000000,
+            address(this) // refunds are returned to this contract
+        );
     }
 
     function handle(
@@ -80,6 +98,15 @@ contract HyperlaneAdapter is IMessageRecipient, IAdapter, Ownable {
 
     function targetMailBox(uint32 _dstChainId) external view returns (address) {
         return supportedNetworks[_dstChainId];
+    }
+
+    function estimateGasFee(
+        uint32 _dstChainId,
+        uint256 _gasAmount,
+        bytes calldata
+    ) public view returns (uint256) {
+        uint32 destinationDomain = convertChainIdToHyperlaneDomain(_dstChainId);
+        return igp.quoteGasPayment(destinationDomain, _gasAmount);
     }
 
     function convertChainIdToHyperlaneDomain(

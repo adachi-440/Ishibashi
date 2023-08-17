@@ -6,5 +6,5 @@ interface IMailbox {
         uint32 _destinationDomain,
         bytes32 _recipientAddress,
         bytes calldata _messageBody
-    ) external returns (uint256);
+    ) external returns (bytes32);
 }

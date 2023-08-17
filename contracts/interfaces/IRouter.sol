@@ -15,4 +15,11 @@ interface IRouter {
         address _originSender,
         bytes calldata _message
     ) external;
+
+    function estimateGasFees(
+        uint32 _dstChainId,
+        uint256 _gasAmount,
+        bytes calldata _message,
+        address[] calldata _adapters
+    ) external view returns (uint256[] memory);
 }

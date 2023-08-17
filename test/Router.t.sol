@@ -65,6 +65,19 @@ contract RouterTest is Test {
         adapter2.init(address(router), dstChainIds, supportedNetworks);
     }
 
+    function test_EstimateGasFees() public {
+        uint32 dstChainId = 1;
+        uint256 gasAmount = 1000000;
+        uint256[] memory fees = router.estimateGasFees(
+            dstChainId,
+            gasAmount,
+            message,
+            supportedNetworks
+        );
+        assertEq(fees[0], 100);
+        assertEq(fees[1], 100);
+    }
+
     function test_UnsupportedNetwork() public {
         uint32 dstChainId = 3;
         vm.expectRevert(bytes4(keccak256("UnsupportedNetwork()")));

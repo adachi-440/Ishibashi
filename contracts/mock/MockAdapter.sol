@@ -87,6 +87,14 @@ contract MockAdapter is IAdapter, Ownable {
         return supportedNetworks[_dstChainId];
     }
 
+    function estimateGasFee(
+        uint32,
+        uint256,
+        bytes calldata
+    ) external pure returns (uint256) {
+        return 100;
+    }
+
     function _sendMessage(
         uint32 _dstChainId,
         address _recipient,

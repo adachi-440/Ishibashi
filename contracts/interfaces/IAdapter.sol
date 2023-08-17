@@ -7,4 +7,10 @@ interface IAdapter {
         address _recipient,
         bytes calldata _message
     ) external payable;
+
+    function estimateGasFee(
+        uint32 _dstChainId,
+        uint256 _gasAmount,
+        bytes calldata _message
+    ) external view returns (uint256);
 }

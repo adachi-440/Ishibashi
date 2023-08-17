@@ -11,7 +11,7 @@ const accounts =
 const apiKey = process.env.INFURA_API_KEY || "";
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.17",
+  solidity: "0.8.15",
   networks: {
     hardhat: {
     },
