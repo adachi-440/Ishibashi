@@ -1,5 +1,4 @@
 import { task, types } from "hardhat/config";
-import ora from "ora";
 import { ethers } from "hardhat";
 
 task("TASK_SEND_MESSAGE", "Send message using router")
@@ -20,13 +19,9 @@ task("TASK_SEND_MESSAGE", "Send message using router")
       const messageBytes = ethers.utils.toUtf8Bytes(message);
 
       try {
-        const spinner = ora(
-          "Sending message. This may take a few minutes.."
-        ).start();
+        console.log("Sending message. This may take a few minutes..");
         const tx = await router.sendMessage(chainid, recipient, messageBytes, adapters);
         await tx.wait();
-        spinner.succeed(`Sent transaction: ${tx.hash}`);
-
       } catch (e: any) {
         if (e.error.message.includes("The chainId + address is already trusted")) {
           console.log("*source already set*")
