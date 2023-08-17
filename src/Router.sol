@@ -5,13 +5,10 @@ import "./interfaces/IRouter.sol";
 import "./interfaces/IAdapter.sol";
 import "./interfaces/IReceiver.sol";
 
-// Uncomment this line to use console.log
-import "hardhat/console.sol";
-
 contract Router is IRouter {
     uint256 private _nonce;
-    mapping(uint32 => mapping(bytes32 => Comfirmation)) public confirmations;
-    struct Comfirmation {
+    mapping(uint32 => mapping(bytes32 => Confirmation)) private confirmations;
+    struct Confirmation {
         uint256 confirmations;
         uint256 threshold;
     }
@@ -58,13 +55,13 @@ contract Router is IRouter {
         address[] calldata _adapters,
         uint256 _threshold
     ) external {
-        bytes32 messageHash = keccak256(abi.encodePacked(_message, _nonce));
-        bytes memory message = abi.encodePacked(messageHash, _message);
+        bytes32 messageHash = _generateMessageHash(_message);
+        bytes memory message = _getMessage(messageHash, _message);
         for (uint256 i = 0; i < _adapters.length; i++) {
             IAdapter adapter = IAdapter(_adapters[i]);
             adapter.sendMessage(_dstChainId, _recipient, message);
         }
-        confirmations[_dstChainId][messageHash] = Comfirmation(0, _threshold);
+        confirmations[_dstChainId][messageHash] = Confirmation(0, _threshold);
         _nonce += 1;
         emit SendMessage(
             messageHash,
@@ -84,7 +81,7 @@ contract Router is IRouter {
             _message,
             (bytes32, bytes)
         );
-        Comfirmation storage confirmation = confirmations[_originChainId][
+        Confirmation storage confirmation = confirmations[_originChainId][
             messageHash
         ];
         confirmation.confirmations += 1;
@@ -130,5 +127,26 @@ contract Router is IRouter {
                 messageBody
             );
         }
+    }
+
+    function getConfirmation(
+        uint32 _dstChainId,
+        bytes32 _messageHash
+    ) external view returns (uint256 confirmation, uint256 threshold) {
+        confirmation = confirmations[_dstChainId][_messageHash].confirmations;
+        threshold = confirmations[_dstChainId][_messageHash].threshold;
+    }
+
+    function _generateMessageHash(
+        bytes memory _message
+    ) internal view returns (bytes32) {
+        return keccak256(abi.encodePacked(_message, _nonce));
+    }
+
+    function _getMessage(
+        bytes32 _messageHash,
+        bytes calldata _message
+    ) internal pure returns (bytes memory) {
+        return abi.encodePacked(_messageHash, _message);
     }
 }

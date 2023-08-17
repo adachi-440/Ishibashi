@@ -8,9 +8,6 @@ import "./interfaces/IRouter.sol";
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-// Uncomment this line to use console.log
-import "hardhat/console.sol";
-
 contract HyperlaneAdapter is IMessageRecipient, IAdapter, Ownable {
     address public router;
     mapping(uint32 => address) public supportedNetworks;
